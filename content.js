@@ -78,7 +78,6 @@ function createTranslatePopup() {
     <div class="translate-popup-content">
       <div class="translate-original"></div>
       <div class="translate-result"></div>
-      <button class="translate-copy-btn">📋 复制翻译</button>
     </div>
     <div class="translate-popup-loading">翻译中...</div>
   `;
@@ -86,32 +85,8 @@ function createTranslatePopup() {
   document.body.appendChild(translatePopup);
 
   // 点击关闭按钮
-  translatePopup.querySelector('.translate-popup-close').addEventListener('click', (e) => {
-    e.stopPropagation();
+  translatePopup.querySelector('.translate-popup-close').addEventListener('click', () => {
     hidePopup();
-  });
-
-  // 复制按钮功能
-  translatePopup.querySelector('.translate-copy-btn').addEventListener('click', async (e) => {
-    e.stopPropagation();
-    const resultText = translatePopup.querySelector('.translate-result').textContent;
-    try {
-      await navigator.clipboard.writeText(resultText);
-      const btn = translatePopup.querySelector('.translate-copy-btn');
-      btn.textContent = '✓ 已复制';
-      btn.classList.add('copied');
-      setTimeout(() => {
-        btn.textContent = '📋 复制翻译';
-        btn.classList.remove('copied');
-      }, 2000);
-    } catch (err) {
-      console.error('复制失败:', err);
-    }
-  });
-
-  // 点击弹窗不关闭（阻止冒泡）
-  translatePopup.addEventListener('click', (e) => {
-    e.stopPropagation();
   });
 
   // 点击其他地方关闭
