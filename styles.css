@@ -110,6 +110,8 @@
   color: #333;
   line-height: 1.6;
   word-break: break-word;
+  user-select: text;
+  cursor: text;
 }
 
 /* 加载状态 */
