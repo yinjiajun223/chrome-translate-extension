@@ -8,6 +8,7 @@ let translateButton = null;
 let translatePopup = null;
 let isTranslating = false;
 let currentSelection = '';
+let isPopupInteracting = false; // 标记是否正在与弹窗交互
 
 // ==================== 翻译功能 ====================
 
@@ -92,6 +93,14 @@ function createTranslatePopup() {
   // 点击弹窗时不关闭（阻止冒泡）
   translatePopup.addEventListener('click', (e) => {
     e.stopPropagation();
+  });
+
+  // 标记鼠标是否在弹窗内
+  translatePopup.addEventListener('mouseenter', () => {
+    isPopupInteracting = true;
+  });
+  translatePopup.addEventListener('mouseleave', () => {
+    isPopupInteracting = false;
   });
 
   // 点击其他地方关闭
@@ -302,6 +311,8 @@ function init() {
 
   // 点击页面时隐藏按钮（除非点击的是翻译按钮或弹窗）
   document.addEventListener('mousedown', (e) => {
+    if (isPopupInteracting) return; // 正在与弹窗交互时不隐藏
+    
     if (translateButton && !translateButton.contains(e.target) && !translatePopup?.contains(e.target)) {
       // 延迟处理，让 click 事件先触发
       setTimeout(() => {
