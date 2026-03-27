@@ -224,7 +224,14 @@ function getSelectionRect() {
 /**
  * 处理选区变化
  */
-function handleSelectionChange() {
+function handleSelectionChange(e) {
+  // 如果点击的是弹窗或按钮，不处理
+  if (e && e.target) {
+    if (translatePopup?.contains(e.target) || translateButton?.contains(e.target)) {
+      return;
+    }
+  }
+
   const selection = window.getSelection();
   const text = selection?.toString().trim();
 
