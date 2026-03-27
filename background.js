@@ -8,23 +8,11 @@
 // 使用 MyMemory 免费翻译 API
 const API_CONFIG = {
   // MyMemory API（免费，无需 API Key）
-  // 每日限制 1000 字符
   myMemory: {
     url: 'https://api.mymemory.translated.net/get',
     params: (text) => ({
       q: text,
       langpair: 'en|zh-CN'
-    })
-  },
-  
-  // 备用：LibreTranslate（免费开源）
-  libreTranslate: {
-    url: 'https://libretranslate.com/translate',
-    body: (text) => ({
-      q: text,
-      source: 'en',
-      target: 'zh',
-      format: 'text'
     })
   }
 };
@@ -73,17 +61,9 @@ async function translateText(text) {
   const maxLength = 500;
   const truncated = text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
 
-  try {
-    // 尝试 MyMemory API
-    const result = await translateWithMyMemory(truncated);
-    return result;
-  } catch (error) {
-    console.error('翻译失败:', error);
-    
-    // 如果 API 失败，尝试返回原文或者简单的处理
-    // 可以在这里添加其他翻译 API 的备用方案
-    return `[翻译失败] ${text}`;
-  }
+  // 尝试 MyMemory API
+  const result = await translateWithMyMemory(truncated);
+  return result;
 }
 
 // ==================== 消息处理 ====================
@@ -96,8 +76,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     // 异步处理
     translateText(message.text)
       .then(translation => {
-        // 记录翻译次数
-        trackUsage();
         sendResponse({ translation });
       })
       .catch(error => {
@@ -109,27 +87,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
 });
-
-/**
- * 追踪翻译使用量
- */
-async function trackUsage() {
-  const result = await chrome.storage.local.get(['translationCount', 'lastResetDate']);
-  let count = result.translationCount || 0;
-  const lastReset = result.lastResetDate;
-  
-  // 每天重置
-  const today = new Date().toDateString();
-  if (lastReset !== today) {
-    count = 0;
-  }
-  
-  count++;
-  await chrome.storage.local.set({ 
-    translationCount: count, 
-    lastResetDate: today 
-  });
-}
 
 // ==================== 安装提示 ====================
 
