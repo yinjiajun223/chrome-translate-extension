@@ -272,15 +272,19 @@ function hideButton() {
  * 初始化插件
  */
 function init() {
+  console.log('🦞 划词翻译插件正在初始化...');
+  
   // 创建 UI
   createTranslateButton();
   createTranslatePopup();
+  console.log('🦞 UI 创建完成');
 
   // 监听选区变化
   document.addEventListener('selectionchange', handleSelectionChange);
   
   // 监听鼠标释放（选区完成后）
   document.addEventListener('mouseup', () => {
+    console.log('🦞 鼠标释放，检测选区');
     setTimeout(handleSelectionChange, 10);
   });
 
@@ -297,8 +301,12 @@ function init() {
     }
   });
 
-  console.log('划词翻译插件已加载');
+  console.log('🦞 划词翻译插件已加载');
 }
 
-// 启动
-init();
+// 确保 DOM 加载完成后初始化
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
