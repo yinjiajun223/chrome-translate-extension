@@ -293,9 +293,9 @@ function init() {
     setTimeout(handleSelectionChange, 10);
   });
 
-  // 点击页面时隐藏按钮（除非点击的是翻译按钮）
+  // 点击页面时隐藏按钮（除非点击的是翻译按钮或弹窗）
   document.addEventListener('mousedown', (e) => {
-    if (translateButton && !translateButton.contains(e.target)) {
+    if (translateButton && !translateButton.contains(e.target) && !translatePopup?.contains(e.target)) {
       // 延迟处理，让 click 事件先触发
       setTimeout(() => {
         const selection = window.getSelection();
