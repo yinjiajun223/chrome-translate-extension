@@ -6,13 +6,18 @@
   "permissions": [
     "activeTab",
     "scripting",
-    "nativeMessaging"
+    "nativeMessaging",
+    "storage"
   ],
   "host_permissions": [
     "<all_urls>"
   ],
   "background": {
     "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "划词翻译"
   },
   "content_scripts": [
     {
@@ -21,8 +26,5 @@
       "css": ["styles.css"],
       "run_at": "document_end"
     }
-  ],
-  "action": {
-    "default_title": "划词翻译"
-  }
+  ]
 }
