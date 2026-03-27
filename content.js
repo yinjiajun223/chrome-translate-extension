@@ -89,6 +89,11 @@ function createTranslatePopup() {
     hidePopup();
   });
 
+  // 点击弹窗时不关闭（阻止冒泡）
+  translatePopup.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
+
   // 点击其他地方关闭
   document.addEventListener('click', (e) => {
     if (translatePopup.style.display === 'block' && 
