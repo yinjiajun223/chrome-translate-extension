@@ -96,6 +96,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     // 异步处理
     translateText(message.text)
       .then(translation => {
+        // 记录翻译次数
+        trackUsage();
         sendResponse({ translation });
       })
       .catch(error => {
@@ -107,6 +109,27 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
 });
+
+/**
+ * 追踪翻译使用量
+ */
+async function trackUsage() {
+  const result = await chrome.storage.local.get(['translationCount', 'lastResetDate']);
+  let count = result.translationCount || 0;
+  const lastReset = result.lastResetDate;
+  
+  // 每天重置
+  const today = new Date().toDateString();
+  if (lastReset !== today) {
+    count = 0;
+  }
+  
+  count++;
+  await chrome.storage.local.set({ 
+    translationCount: count, 
+    lastResetDate: today 
+  });
+}
 
 // ==================== 安装提示 ====================
 
