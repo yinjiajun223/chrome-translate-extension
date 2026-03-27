@@ -5,15 +5,15 @@
 #translate-btn {
   position: absolute;
   z-index: 2147483647;
-  padding: 6px 12px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 6px 14px;
+  background: #2563eb;
   color: white;
-  font-size: 12px;
+  font-size: 13px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   border: none;
-  border-radius: 20px;
+  border-radius: 6px;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   transition: all 0.2s ease;
   white-space: nowrap;
   user-select: none;
@@ -21,9 +21,8 @@
 }
 
 #translate-btn:hover {
+  background: #1d4ed8;
   transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.6);
-  background: linear-gradient(135deg, #7c8ff0 0%, #8a5fb5 100%);
 }
 
 #translate-btn:active {
@@ -40,13 +39,13 @@
 #translate-popup {
   position: absolute;
   z-index: 2147483647;
-  min-width: 200px;
+  min-width: 220px;
   max-width: 400px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  background: #1e1e1e;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', sans-serif;
-  overflow: hidden;
+  overflow: visible;
   animation: translatePopupFadeIn 0.2s ease;
 }
 
@@ -67,8 +66,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 14px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #2563eb;
   color: white;
+  border-radius: 8px 8px 0 0;
 }
 
 .translate-popup-title {
@@ -96,10 +96,10 @@
 /* 原文 */
 .translate-original {
   font-size: 12px;
-  color: #999;
+  color: #888;
   margin-bottom: 10px;
   padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #333;
   word-break: break-word;
   line-height: 1.5;
 }
@@ -107,9 +107,36 @@
 /* 翻译结果 */
 .translate-result {
   font-size: 15px;
-  color: #333;
+  color: #fff;
   line-height: 1.6;
   word-break: break-word;
+  user-select: text;
+  cursor: text;
+}
+
+/* 复制按钮 */
+.translate-copy-btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 4px 10px;
+  background: #333;
+  color: #aaa;
+  font-size: 11px;
+  border: 1px solid #444;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.translate-copy-btn:hover {
+  background: #444;
+  color: #fff;
+}
+
+.translate-copy-btn.copied {
+  background: #16a34a;
+  color: white;
+  border-color: #16a34a;
 }
 
 /* 加载状态 */
@@ -117,7 +144,7 @@
   display: none;
   padding: 14px;
   text-align: center;
-  color: #999;
+  color: #888;
   font-size: 13px;
 }
 
@@ -127,8 +154,8 @@
   width: 14px;
   height: 14px;
   margin-left: 8px;
-  border: 2px solid #eee;
-  border-top-color: #667eea;
+  border: 2px solid #444;
+  border-top-color: #2563eb;
   border-radius: 50%;
   animation: translateSpin 0.8s linear infinite;
   vertical-align: middle;
